@@ -131,3 +131,70 @@ class Node{
     next=null;
   }
 }
+
+
+//====================remove mid node from linkedlist
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+public class Main
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+        Scanner scn= new Scanner(System.in);
+        int n=scn.nextInt();
+      Node head=null;
+      Node ptr=head;
+      while(n-->0){
+        Node temp=new Node(scn.nextInt());
+        if(head==null){
+          head=temp;
+          ptr=temp;
+          continue;
+        }
+        ptr.next=temp;
+        ptr=ptr.next;
+       }
+      head=removeMidNode(head);
+      print(head);
+
+    }
+  public static void print(Node head){
+    Node ptr=head;
+    while(ptr!=null){
+      System.out.print(ptr.val+" ");
+      ptr=ptr.next;
+    }
+  }
+    public static Node removeMidNode(Node head){
+      if(head.next==null){
+        System.out.println(-1);
+         return null;
+      }
+
+      Node ptr1=head;
+      Node ptr2=head;
+      Node prev=null;
+      while(ptr2!=null&&ptr2.next!=null){
+          ptr2=ptr2.next.next;
+          prev=ptr1;
+         ptr1=ptr1.next;
+
+      }
+      prev.next=prev.next.next;
+      ptr1.next=null;
+      return head;
+
+    }
+}
+class Node{
+  int val;
+  Node next;
+  Node(int val){
+    this.val=val;
+  }
+}
+
+
