@@ -197,4 +197,47 @@ class Node{
   }
 }
 
+//===============print in reverse================
 
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+public class Main
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		  Scanner scn= new Scanner(System.in);
+        int n=scn.nextInt();
+      Node head=null;
+      Node ptr=head;
+      while(n-->0){
+        Node temp=new Node(scn.nextInt());
+        if(head==null){
+          head=temp;
+          ptr=temp;
+          continue;
+        }
+        ptr.next=temp;
+        ptr=ptr.next;
+       }
+      //expectation
+      printInReverse(head);
+	}
+  public static void printInReverse(Node head){
+    //base case
+    if(head==null){
+      return;
+    }
+     //faith
+      printInReverse(head.next);
+      System.out.print(head.val+" ");
+  }
+}
+class Node{
+  int val;
+  Node next;
+  Node(int val){
+    this.val=val;
+  }
+}
