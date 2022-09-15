@@ -306,3 +306,102 @@ class Node{
     this.val=val;
   }
 }
+
+//==================================Reverse Alternate Nodes of a Singly Linked List
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+public class Main
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{     Scanner scn=new Scanner(System.in);
+              int n=scn.nextInt();
+                Node head=null;
+                Node ptr=null;
+                while(n-->0){
+                        Node temp=new Node(scn.nextInt());
+                        if(head==null){
+                                head=temp;
+                                ptr=temp;
+                                continue;
+                        }
+                        ptr.next=temp;
+                        ptr=ptr.next;
+                }
+
+               solve(head);
+        }
+        public static void solve(Node head){
+                if(head==null||head.next==null||head.next.next==null){
+                        print(head);
+                        return;
+                }
+                Node oddhead=head;
+                Node evenhead=head.next;
+                Node oddptr=head;
+                Node evenptr=head.next;
+                while(oddptr!=null&&evenptr!=null){
+                        oddptr.next=evenptr.next;
+                        oddptr=oddptr.next;
+                        if(oddptr==null)break;
+                        evenptr.next=oddptr.next;
+                        evenptr=evenptr.next;
+                }
+                evenhead=reverse(evenhead);
+                oddptr=oddhead;
+                while(oddptr.next!=null){
+                        oddptr=oddptr.next;
+                }
+                oddptr.next=evenhead;
+                print(oddhead);
+
+
+
+        }
+        public static void print(Node head){
+                Node ptr=head;
+                while(ptr!=null){
+                        System.out.print(ptr.val+" ");
+                        ptr=ptr.next;
+                }
+        }
+        public static Node reverse(Node head){
+                Node prev=null;
+                Node curr=head;
+                while(curr!=null){
+                        Node next=curr.next;
+                        curr.next=prev;
+                        prev=curr;
+                        curr=next;
+                }
+                return prev;
+        }
+}
+
+class Linkedlist{
+        Node head;
+
+        public void addLast(int val){
+                Node n=new Node(val);
+                if(this.head==null){
+                        head=n;
+                        return;
+                }
+                Node temp=head;
+                while(temp.next!=null){
+                        temp=temp.next;
+                }
+                temp.next=n;
+
+        }
+}
+class Node{
+        int val;
+        Node next;
+        Node(int val){
+                this.val=val;
+                this.next=null;
+        }
+}
