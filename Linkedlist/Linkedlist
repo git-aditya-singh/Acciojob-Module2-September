@@ -405,3 +405,73 @@ class Node{
                 this.next=null;
         }
 }
+
+//===========swap kth node from last==================
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+public class Main
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		 Scanner scn=new Scanner(System.in);
+              int n=scn.nextInt();
+                int k=scn.nextInt();
+                Node head=null;
+                Node ptr=null;
+                while(n-->0){
+                        Node temp=new Node(scn.nextInt());
+                        if(head==null){
+                                head=temp;
+                                ptr=temp;
+                                continue;
+                        }
+                        ptr.next=temp;
+                        ptr=ptr.next;
+                }
+                Node ptr1=head;
+                for(int i=1;i<k-1;i++){
+                        ptr1=ptr1.next;
+                }
+                Node dummy=head;
+                for(int i=0;i<k;i++){
+                        dummy=dummy.next;
+                }
+                Node ptr2=head;
+                while(dummy.next!=null){
+                        dummy=dummy.next;
+                        ptr2=ptr2.next;
+                }
+                Node ptr1next=ptr1.next;
+                Node ptr2next=ptr2.next;
+                Node temp=ptr1next.next;
+                ptr1next.next=ptr2next.next;
+                ptr2next.next=temp;
+                ptr1.next=ptr2next;
+                ptr2.next=ptr1next;
+                if(k==1){
+                        head=ptr2next;
+                }
+                print(head);
+
+
+
+     }
+        public static void print(Node head){
+                Node temp=head;
+                while(temp!=null){
+                        System.out.print(temp.val+" ");
+                        temp=temp.next;
+                }
+        }
+}
+class Node{
+        int val;
+        Node next;
+        Node(int val){
+                this.val=val;
+                this.next=null;
+        }
+}
