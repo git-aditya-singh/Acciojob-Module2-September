@@ -475,3 +475,110 @@ class Node{
                 this.next=null;
         }
 }
+
+//=======================adding two numbers represented as linkedlist====
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+public class Main
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Scanner scn=new Scanner(System.in);
+                int n=scn.nextInt();
+                int m=scn.nextInt();
+                Node head1=null;
+                Node ptr=null;
+                while(n-->0){
+                        Node temp=new Node(scn.nextInt());
+                        if(head1==null){
+                                head1=temp;
+                                ptr=temp;
+                                continue;
+                        }
+                        ptr.next=temp;
+                        ptr=ptr.next;
+                }
+                ptr=null;
+                Node head2= null;
+                ptr=null;
+                while(m-->0){
+                        Node temp=new Node(scn.nextInt());
+                        if(head2==null){
+                                head2=temp;
+                                ptr=temp;
+                                continue;
+                        }
+                        ptr.next=temp;
+                        ptr=ptr.next;
+                }
+                solve(head1,head2);
+
+	}
+        public static void solve(Node head1,Node head2){
+                int s1=size(head1);
+                int s2=size(head2);
+                Node dummy=new Node(-1);
+                int carry=helper(head1,head2,s1,s2,dummy);
+                if(carry!=0){
+                        Node temp=new Node(carry);
+                        temp.next=dummy.next;
+                        dummy.next=temp;
+                }
+                print(dummy.next);
+        }
+        public static int helper(Node head1,Node head2,int s1,int s2,Node dummy){
+                //base case
+                if(head1==null&&head2==null){
+                        return 0;
+                }
+                int carry=0;
+                int val=0;
+                if(s1>s2){
+                        carry=helper(head1.next,head2,s1-1,s2,dummy);
+                        val=carry+head1.val;
+                }else if(s2>s1){
+                        carry=helper(head1,head2.next,s1,s2-1,dummy);
+                        val=carry+head2.val;
+                }else{
+                        carry=helper(head1.next,head2.next,s1-1,s2-1,dummy);
+                        val=carry+head1.val+head2.val;
+                }
+                int data=val%10;
+                carry=val/10;
+                Node temp=new Node(data);
+                temp.next=dummy.next;
+                dummy.next=temp;
+                return carry;
+        }
+        public static int size(Node head){
+                Node ptr=head;
+                int count=0;
+                while(ptr!=null){
+                        count++;
+                        ptr=ptr.next;
+                }
+                return count;
+        }
+        public static void print(Node head){
+                Node temp=head;
+                while(temp!=null){
+                        System.out.print(temp.val+" ");
+                        temp=temp.next;
+                }
+        }
+
+
+
+
+}
+class Node{
+        int val;
+        Node next;
+        Node(int val){
+                this.val=val;
+                this.next=null;
+        }
+}
