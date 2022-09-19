@@ -71,4 +71,24 @@ public class BinarySearch {
         }
         return ri;
     }
+    //======================search in 2d matrix  O(n)==================
+    public static void searchin2d(int arr[][],int x){
+            int n=arr.length;
+            int i=0;
+            int j=n-1;
+            while(i<n&&j>=0){
+               if(arr[i][j]==x){
+                   System.out.print(i+" "+j+" ");
+                   break;
+               }else if(arr[i][j]>x){
+                    j--;
+               }else{
+                   i++;
+               }
+           }
+           if(i>=n||j<0){
+               System.out.println(-1+" "+-1+" ");
+           }
+           System.out.println();
+    }
 }
