@@ -91,4 +91,56 @@ public class BinarySearch {
            }
            System.out.println();
     }
+    //=========================search in 2d matrix O(log(n))===========================
+    public static void searchin2dLogn(int arr[][],int x){
+        int n=arr.length;
+        if(n==1){
+            if(arr[0][0]==x){
+                System.out.println(0+" "+0);
+            }else{
+                System.out.println(-1+" "+-1);
+            }
+            return;
+        }
+        //reduced the no of rows to 2
+        int c=n-1;
+        int r1=0;
+        int r2=n-1;
+        while(r1+1!=r2){
+            int mid=(r1+r2)/2;
+            if(arr[mid][c]==x){
+                System.out.println(mid+" "+c);break;
+            }else if(arr[mid][c]>x){
+                r2=mid;
+            }else{
+                r1=mid;
+            }
+        }
+        if(r1+1!=r2){
+            return;
+        }
+        boolean ans;
+        ans=binarysearch(arr,r1,x);
+        if(!ans){
+            ans=binarysearch(arr,r2,x);
+        }
+        if(!ans){
+            System.out.println(-1+" "+-1);
+        }
+    }
+    public static boolean binarysearch(int arr[][],int r,int x){
+        int li=0;
+        int ri=arr[0].length-1;
+        while(li<=ri){
+            int mid=(li+ri)/2;
+            if(arr[r][mid]==x){
+                System.out.println(r+" "+mid);return true;
+            }else if(arr[r][mid]<x){
+                li=mid+1;
+            }else{
+                ri=mid-1;
+            }
+        }
+        return false;
+    }
 }
