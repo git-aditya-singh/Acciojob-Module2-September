@@ -143,4 +143,41 @@ public class BinarySearch {
         }
         return false;
     }
+    //===========================Capacity To Ship Packages Within B Days=======================
+
+    public static int capShipInBDays(int arr[],int days){
+        int sum=0;
+        int max=Integer.MIN_VALUE;
+        for(int val:arr){
+            sum+=val;
+            max=Math.max(max,val);
+        }
+        int li=max;
+        int ri=sum;
+        int ans=0;
+        while(li<=ri){
+            int mid=(li+ri)/2;
+            if(possible(mid,arr,days)){
+                ans=mid;ri=mid-1;
+            }else{
+                li=mid+1;
+            }
+        }
+        return ans;
+    }
+    public static boolean possible(int mid,int arr[],int days){
+        int count=1;int temp=mid;
+        for(int val:arr){
+            if(val<=temp){
+                temp-=val;
+            }else{
+                count++;
+                temp=mid-val;
+            }
+        }
+        if(count<=days){
+            return true;
+        }
+        return false;
+    }
 }
