@@ -217,4 +217,37 @@ public class BinarySearch {
         System.out.println(sp+" "+ep);
 
     }
+    //====================find peak element==========
+    public int findPeakElement(int[] arr) {
+        int n=arr.length;
+        int li=0;
+        int ri=n-1;
+        while(li<=ri){
+            int mid=(li+ri)/2;
+            long l,r;
+            //finding neighbouring elements
+            if(mid==0){
+                l=Long.MIN_VALUE;
+            }else{
+                l=arr[mid-1];
+            }
+            if(mid==n-1){
+                r=Long.MIN_VALUE;
+            }else{
+                r=arr[mid+1];
+            }
+            if(arr[mid]>l&&arr[mid]>r){
+                return mid;
+            }else if(l>arr[mid]){
+                ri=mid-1;
+            }else{
+                li=mid+1;
+            }
+
+        }
+        return -1;
+
+    }
+
+    //==============allocate pages========================================
 }
