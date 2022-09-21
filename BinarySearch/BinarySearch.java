@@ -180,4 +180,41 @@ public class BinarySearch {
         }
         return false;
     }
+
+    //=========================search for a range==================
+
+    public static void searchForRange(int arr[],int tar){
+        int n=arr.length;
+        int li=0;
+        int ri=n-1;
+        int sp=-1;
+        int ep=-1;
+        while(li<=ri){
+            int mid=(li+ri)/2;
+            if(arr[mid]==tar){
+                sp=mid;
+                ri=mid-1;
+            }else if(arr[mid]>tar){
+                ri=mid-1;
+            }else{
+                li=mid+1;
+            }
+        }
+
+        li=0;
+        ri=n-1;
+        while(li<=ri){
+            int mid=(li+ri)/2;
+            if(arr[mid]==tar){
+                ep=mid;
+                li=mid+1;
+            }else if(arr[mid]>tar){
+                ri=mid-1;
+            }else{
+                li=mid+1;
+            }
+        }
+        System.out.println(sp+" "+ep);
+
+    }
 }
