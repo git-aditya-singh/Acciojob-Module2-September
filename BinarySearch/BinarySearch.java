@@ -250,4 +250,109 @@ public class BinarySearch {
     }
 
     //==============allocate pages========================================
+    public static long allocatePages(int arr[],int stu){
+        if(arr.length<stu){
+            return -1;
+        }
+        int n=arr.length;
+
+        int li=Integer.MIN_VALUE;
+        int ri=0;
+        for(int val:arr){
+            li=Math.max(li,val);
+            ri=ri+val;
+        }
+        long ans=-1;
+        while(li<=ri){
+            long mid=(li+ri)/2;
+            if(validate(arr,mid,stu)){
+                ans=mid;
+                ri=(int)mid-1;
+            }else{
+                li=(int)mid+1;
+            }
+        }
+        return ans;
+
+    }
+    public static boolean validate(int arr[],long mid,int stu){
+        int currst=1;int sum=0;
+        for(int val:arr){
+            sum+=val;
+            if(sum>mid){
+                currst++;
+                sum=val;
+            }
+        }
+        if(currst<=stu){
+            return true;
+        }
+        return false;
+
+    }
+    //==================min penalty======================================
+    public static int minPenalty(int arr[],int maxop){
+        int li=1;
+        int ri=Integer.MIN_VALUE;
+        for(int val:arr){
+            ri=Math.max(val,ri);
+        }
+        int ans=-1;
+        while(li<=ri){
+            int mid=(li+ri)/2;
+            if(possible(arr,mid,maxop)){
+                ans=mid;
+                ri=mid-1;
+            }else{
+                li=mid+1;
+            }
+        }
+        return ans;
+
+    }
+    public static boolean possible(int arr[],int mid,int maxop){
+        int op=0;
+        for(int val:arr){
+            int temp=val/mid;
+            if(val%mid==0){
+                temp--;
+            }
+            op+=temp;
+        }
+        if(op<=maxop)return true;
+        return false;
+    }
+
+    //====================Kevin and fruits=================
+    public static int KevinAndFruits(int arr[],int m){
+        int li=0;
+        int ri=Integer.MIN_VALUE;
+        for(int val:arr){
+            ri=Math.max(ri,val);
+        }
+        int ans=-1;
+        while(li<=ri){
+            int mid=(li+ri)/2;
+            if(possible1(arr,mid,m)){
+                ans=mid;
+                li=mid+1;
+            }else{
+                ri=mid-1;
+            }
+        }
+        return ans;
+    }
+    public static boolean possible1(int arr[],int mid,int m){
+        int totalfruits=0;
+        for(int val:arr){
+            int temp=val-mid;
+            if(temp>0){
+                totalfruits+=temp;
+            }
+        }
+        if(totalfruits>=m){
+            return true;
+        }
+        return false;
+    }
 }
