@@ -256,8 +256,8 @@ public class BinarySearch {
         }
         int n=arr.length;
 
-        int li=Integer.MIN_VALUE;
-        int ri=0;
+        long li=Integer.MIN_VALUE;
+        long ri=0;
         for(int val:arr){
             li=Math.max(li,val);
             ri=ri+val;
@@ -267,16 +267,16 @@ public class BinarySearch {
             long mid=(li+ri)/2;
             if(validate(arr,mid,stu)){
                 ans=mid;
-                ri=(int)mid-1;
+                ri=mid-1;
             }else{
-                li=(int)mid+1;
+                li=mid+1;
             }
         }
         return ans;
 
     }
     public static boolean validate(int arr[],long mid,int stu){
-        int currst=1;int sum=0;
+        long currst=1;long sum=0;
         for(int val:arr){
             sum+=val;
             if(sum>mid){
