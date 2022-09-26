@@ -165,4 +165,23 @@ public class StackQuestions {
         return true;
 
     }
+
+    //===================triangular number====================================
+    public static int isTriangularNumber(int n){
+        int li=0;
+        int ri=n;
+        while(li<=ri){
+            int mid=(li+ri)/2;
+            int noOfBalls=(mid*(mid+1))/2;
+            if(noOfBalls==n){
+                return 1;
+            }
+            if(noOfBalls>n){
+                ri=mid-1;
+            }else{
+                li=mid+1;
+            }
+        }
+        return 0;
+    }
 }
