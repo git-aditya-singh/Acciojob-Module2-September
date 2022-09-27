@@ -166,22 +166,138 @@ public class StackQuestions {
 
     }
 
-    //===================triangular number====================================
-    public static int isTriangularNumber(int n){
-        int li=0;
-        int ri=n;
-        while(li<=ri){
-            int mid=(li+ri)/2;
-            int noOfBalls=(mid*(mid+1))/2;
-            if(noOfBalls==n){
-                return 1;
-            }
-            if(noOfBalls>n){
-                ri=mid-1;
-            }else{
-                li=mid+1;
+    //=============minstack===================================
+
+    class MinStack {
+        Stack<Integer>allData=new Stack<>();
+        Stack<Integer>minData=new Stack<>();
+        public MinStack() {
+            allData=new Stack<>();
+            minData=new Stack<>();
+        }
+
+        public void push(int val) {
+            allData.push(val);
+            if(minData.size()==0||val<=minData.peek()){
+                minData.push(val);
             }
         }
-        return 0;
+
+        public void pop() {
+            int val=allData.pop();
+            if(minData.peek()==val){
+                minData.pop();
+            }
+        }
+
+        public int top() {
+            return allData.peek();
+        }
+
+        public int getMin() {
+            return minData.peek();
+        }
+    }
+
+    //=============INFIX TO POSTFIX=======================
+    public static String infixToPostfix(String str){
+        Stack<String>operands=new Stack<>();
+        Stack<Character>operator=new Stack<>();
+        for(int i=0;i<str.length();i++){
+            char ch=str.charAt(i);
+            if(ch=='('){
+                operator.push(ch);
+
+            }else if(ch>='A'&&ch<='Z'){
+                operands.push(ch+"");
+            }else if(ch==')'){
+                while(operator.size()>0&&operator.peek()!='('){
+                    char op=operator.pop();
+                    String v2=operands.pop();
+                    String v1=operands.pop();
+                    String ans=v1+v2+op;
+                    operands.push(ans);
+                }
+                if(operator.size()!=0){
+                    operator.pop();
+                }
+
+            }else if(ch=='+'||ch=='-'||ch=='/'||ch=='*'||ch=='^'){
+                while(operator.size()>0&&operator.peek()!='('&& priority(operator.peek())>=priority(ch)){
+                    char op=operator.pop();
+                    String v2=operands.pop();
+                    String v1=operands.pop();
+                    String ans=v1+v2+op;
+                    operands.push(ans);
+                }
+                operator.push(ch);
+            }
+        }
+        while(operator.size()!=0){
+            char op=operator.pop();
+            String v2=operands.pop();
+            String v1=operands.pop();
+            String ans=v1+v2+op;
+            operands.push(ans);
+        }
+        return operands.peek();
+    }
+    public static int priority(char op){
+        if(op=='+'||op=='-'){
+            return 1;
+        }else if(op=='*'||op=='/'){
+            return 2;
+        }else{
+            return 3;
+        }
+    }
+
+    //================sum of subarray minimums==========================
+    public static int sumOfSubarrayMinimums(int arr[]){
+
+        int sol[]=smallerOnLeft(arr);
+        int sor[]=smallerOnRight(arr);
+        long ans=0;
+        int mod=(int)1e9+7;
+        for(int i=0;i<arr.length;i++){
+            int noOfSubarrays=(sol[i]+1)*(sor[i]+1);
+            ans+=noOfSubarrays*arr[i];
+            ans=ans%mod;
+        }
+        return (int)ans;
+    }
+    public static int[] smallerOnLeft(int arr[]){
+        int n=arr.length;
+        int ans[]=new int[n];
+        Stack<Integer>st=new Stack<>();
+        for(int i=0;i<n;i++){
+            while(st.size()>0&&arr[st.peek()]>arr[i]){
+                st.pop();
+            }
+            if(st.size()==0){
+                ans[i]=i;
+            }else{
+                ans[i]=i-st.peek()-1;
+            }
+            st.push(i);
+        }
+        return ans;
+    }
+    public static int[] smallerOnRight(int arr[]){
+        int n=arr.length;
+        int ans[]=new int[n];
+        Stack<Integer>st=new Stack<>();
+        for(int i=n-1;i>=0;i--){
+            while(st.size()>0&&arr[st.peek()]>=arr[i]){
+                st.pop();
+            }
+            if(st.size()==0){
+                ans[i]=n-i-1;
+            }else{
+                ans[i]=st.peek()-i-1;
+            }
+            st.push(i);
+        }
+        return ans;
     }
 }
