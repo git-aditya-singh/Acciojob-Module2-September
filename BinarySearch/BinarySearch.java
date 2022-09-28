@@ -374,4 +374,43 @@ public class BinarySearch {
         }
         return 0;
     }
+
+    //=====================koko eating banana===============================
+
+    public int minEatingSpeed(int[] piles, int h) {
+
+        int n=piles.length;
+        long li=1;
+        long ri=1000000000;
+        for(int val: piles){
+            ri+=val;
+        }
+        long ans=-1;
+        while(li<=ri){
+            long mid=(li+ri)/2;
+            if(possibleToEat(piles,mid,h)){
+                ans=mid;
+                ri=mid-1;
+            }else{
+                li=mid+1;
+            }
+        }
+        return (int)ans;
+    }
+    public boolean possibleToEat(int arr[],long mid,int h){
+        int ch=0;
+        for(int val:arr){
+            if(val<mid){
+                ch+=1;
+            }else if(val%mid==0){
+                ch+=val/mid;
+            }else{
+                ch+=(val/mid)+1;
+            }
+            if(ch>h){
+                return false;
+            }
+        }
+        return true;
+    }
 }
