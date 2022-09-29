@@ -1,5 +1,6 @@
 package BinarySearch;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class BinarySearch {
@@ -412,5 +413,40 @@ public class BinarySearch {
             }
         }
         return true;
+    }
+
+    //======================aggressive cows=========================
+    public static int aggressiveCows(int[]stalls,int cows){
+        int n=stalls.length;
+        Arrays.sort(stalls);
+        int li=1;
+        int ri=stalls[n-1]-stalls[0];
+        int ans=-1;
+        while(li<=ri){
+            int mid=(li+ri)/2;
+            if(possibleToPlace(stalls,mid,cows)){
+                ans=mid;
+                li=mid+1;
+            }else{
+                ri=mid-1;
+            }
+        }
+        return ans;
+    }
+    public static boolean possibleToPlace(int[]stalls,int mid,int cows){
+        int cow=1;
+        int lastcow=stalls[0];
+        int n=stalls.length;
+        for(int i=1;i<n;i++){
+            if(stalls[i]-lastcow>=mid){
+                cow++;
+                lastcow=stalls[i];
+            }
+            if(cow==cows){
+                return true;
+            }
+        }
+        return false;
+
     }
 }
