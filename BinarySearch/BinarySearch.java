@@ -449,4 +449,44 @@ public class BinarySearch {
         return false;
 
     }
+
+    //========minimum no days to make m cakes===================
+
+    public static int minimumTimeToMakeCake(int arr[],int m,int k){
+
+        int li=0;
+        int ri=10000;
+        int ans=-1;
+        while(li<=ri){
+            int mid=(li+ri)/2;
+            //System.out.println(mid);
+            if(isPossible(arr,mid,m,k)){
+                ans=mid;
+                ri=mid-1;
+            }else{
+                li=mid+1;
+            }
+        }
+        return ans;
+    }
+    public static boolean isPossible(int arr[],int mid,int m,int k){
+        int noOfFlavours=0;
+        int noOfCakes=0;
+        for(int val:arr){
+            if(val>mid){
+                noOfFlavours=0;
+                continue;
+            }
+            noOfFlavours++;
+            if(noOfFlavours==k){
+                noOfCakes++;
+                noOfFlavours=0;
+            }
+        }
+        // System.out.println(noOfCakes);
+        if(noOfCakes>=m){
+            return true;
+        }
+        return false;
+    }
 }
